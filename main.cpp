@@ -37,10 +37,17 @@ using namespace cv;
 /*
  * 
  */
+void readme();
+ 
 int main(int argc, char** argv) {
+     if( argc != 3 )
+  { readme(); return -1; }
+     Mat frame;
+int option = atoi(argv[1]);
+if(option == 2){
 CvCapture* capture;
 
-   Mat frame;
+   
 
    //-- 1. Load the cascades
    if( !face_cascade.load( face_cascade_name ) ){ printf("--(!)Error loading\n"); return -1; };
@@ -64,6 +71,12 @@ CvCapture* capture;
        if( (char)c == 'c' ) { break; }
       }
    }
+}
+else {
+    frame = imread(argv[2]);
+detectAndDisplay( frame );
+waitKey();
+}
     return 0;
 }
 
@@ -126,4 +139,9 @@ int findBiggestContour(vector<vector<Point> > contours){
         }
     }
     return indexOfBiggestContour;
+}
+void readme()
+  { std::cout << " Usage: ./executable_file <option> <path_of_image_file OR video> \n" << std::endl;
+   std::cout << " Option: 1 = Load image from file i.e image file path \n" << std::endl;
+   std::cout << " Option: 2 = web cam \n" << std::endl;
 }
